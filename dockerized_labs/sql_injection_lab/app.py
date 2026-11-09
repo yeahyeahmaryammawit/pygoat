@@ -48,13 +48,13 @@ def lab():
 
         # Vulnerable SQL query construction (intentional)
         sql_query = (
-            f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
+            "SELECT * FROM users WHERE username=? AND password=?"
         )
 
         try:
             conn = sqlite3.connect("database.db")
             c = conn.cursor()
-            result = c.execute(sql_query).fetchone()
+            result = c.execute(sql_query, (username, password)).fetchone()
             conn.close()
 
             if result:
