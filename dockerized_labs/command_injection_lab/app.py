@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import subprocess
 import os
+import ast
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "your-secret-key-here"
@@ -46,7 +47,7 @@ def lab2():
         try:
             # Intentionally vulnerable eval
             expression = request.form.get("val", "")
-            output = eval(expression)
+            output = ast.literal_eval(expression)
             return render_template("lab2.html", output=str(output))
         except Exception as e:
             return render_template("lab2.html", output=str(e))
